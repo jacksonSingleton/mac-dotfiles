@@ -102,11 +102,10 @@ source $ZSH/oh-my-zsh.sh
 
 alias zshrc="nvim ~/.zshrc"
 alias vim="nvim"
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/jackson/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jackson/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/jackson/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jackson/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+alias exr="exercism"
+alias usetest="gcloud container clusters get-credentials qa --zone us-central1-a --project ankur-playground"
+alias usedev="gcloud container clusters get-credentials dev --zone us-central1-a --project pnicholls-211415"
+alias useprod="gcloud container clusters get-credentials prod --zone us-central1-a --project orc-project-200112"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -121,7 +120,27 @@ medik8(){
     kubectl get pods | grep -E "^"$1"-\w+-\w+ " | cut -d " " -f 1 | xargs kubectl logs --follow
 }
 
+mkdir() {
+    command mkdir -p "$@" && cd "$_";
+}
+
+gush(){
+    git commit -am "$1" && git push
+}
+
+glone(){
+    git clone "$1"
+}
+
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-15.jdk/Contents/Home
 
-export PATH="$JAVA_HOME/bin:$PATH"
+export PATH="$JAVA_HOME/bin:$HOME/.luarocks/bin:$HOME/.emacs.d/bin:$PATH"
 alias config='/usr/bin/git --git-dir=/Users/jackson/.cfg/ --work-tree=/Users/jackson'
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/jackson/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jackson/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/jackson/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jackson/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+export JAVA_HOME=$(/usr/libexec/java_home)

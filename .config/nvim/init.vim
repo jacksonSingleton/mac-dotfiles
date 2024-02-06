@@ -20,7 +20,7 @@ set clipboard=unnamedplus
 set termguicolors
 set laststatus=3
 set winbar=%=%f%=%m%=%r%=%w%=%h%=%=
-
+autocmd FileType c ClangFormatAutoEnable
 
 call plug#begin('~/.vim/plugged')
     Plug 'andweeb/presence.nvim'
@@ -53,6 +53,7 @@ call plug#begin('~/.vim/plugged')
 
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+    Plug 'rhysd/vim-clang-format'
     Plug 'mattn/emmet-vim'
     Plug 'tpope/vim-surround'
     Plug 'flazz/vim-colorschemes'
@@ -174,7 +175,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'tsserver', 'cssls', 'solargraph' }
+local servers = { 'tsserver', 'cssls', 'solargraph', 'ccls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -261,7 +262,7 @@ lua <<EOF
 EOF
 
 
-colorscheme catppuccin-mocha
+colorscheme catppuccin-macchiato
 lua << EOF
 require('zen-mode').setup{}
 EOF
