@@ -1,1 +1,0 @@
-/Users/jackson/.doom.d
