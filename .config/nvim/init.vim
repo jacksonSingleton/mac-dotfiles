@@ -23,6 +23,7 @@ set winbar=%=%f%=%m%=%r%=%w%=%h%=%=
 autocmd FileType c ClangFormatAutoEnable
 
 call plug#begin('~/.vim/plugged')
+    Plug 'rose-pine/neovim', { 'as': 'rose-pine' }
     Plug 'andweeb/presence.nvim'
     Plug 'nvim-lua/plenary.nvim'
     Plug 'APZelos/blamer.nvim'
@@ -175,7 +176,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'tsserver', 'cssls', 'solargraph', 'ccls' }
+local servers = { 'tsserver', 'cssls', 'solargraph', 'ccls', 'elixirls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -262,7 +263,7 @@ lua <<EOF
 EOF
 
 
-colorscheme catppuccin-macchiato
+colorscheme rose-pine
 lua << EOF
 require('zen-mode').setup{}
 EOF

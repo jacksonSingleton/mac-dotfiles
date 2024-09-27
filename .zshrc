@@ -105,7 +105,9 @@ alias vim="nvim"
 alias exr="exercism"
 alias usetest="gcloud container clusters get-credentials qa --zone us-central1-a --project ankur-playground"
 alias usedev="gcloud container clusters get-credentials dev --zone us-central1-a --project pnicholls-211415"
+alias usestaging="gcloud container clusters get-credentials staging --zone us-central1-a --project staging-1edtech"
 alias useprod="gcloud container clusters get-credentials prod --zone us-central1-a --project orc-project-200112"
+alias cat="bat"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -120,8 +122,17 @@ medik8(){
     kubectl get pods | grep -E "^"$1"-\w+-\w+ " | cut -d " " -f 1 | xargs kubectl logs --follow
 }
 
+indik8(){
+    kubectl get pods | grep -E "^"$1"-\w+-\w+ " | cut -d " " -f 1 | xargs kubectl describe pod
+}
+
+
 mkdir() {
     command mkdir -p "$@" && cd "$_";
+}
+
+gmit(){
+    git commit -am "$1"
 }
 
 gush(){
@@ -130,6 +141,10 @@ gush(){
 
 glone(){
     git clone "$1"
+}
+
+tt(){
+    history | grep $1
 }
 
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-15.jdk/Contents/Home
@@ -144,3 +159,18 @@ if [ -f '/Users/jackson/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Use
 if [ -f '/Users/jackson/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jackson/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export JAVA_HOME=$(/usr/libexec/java_home)
+
+# pnpm
+export PNPM_HOME="/Users/jackson/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+export STM32CubeMX_PATH=/Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources
