@@ -147,6 +147,14 @@ tt(){
     history | grep $1
 }
 
+pullall(){
+    ls | xargs -P10 -I{} git -C {} pull
+}
+
+req(){
+    curl -X GET $1 | jq
+}
+
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-15.jdk/Contents/Home
 
 export PATH="$JAVA_HOME/bin:$HOME/.luarocks/bin:$HOME/.emacs.d/bin:$PATH"
