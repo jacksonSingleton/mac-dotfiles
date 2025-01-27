@@ -10,7 +10,7 @@ module.exports = {
         // default font size in pixels for all tabs
         fontSize: 18,
         // font family with optional fallbacks
-        fontFamily: '"Space Mono Nerd Font", "JetBrainsMono Nerd Font Mono","Hasklug Nerd Font Mono", "SauceCodePro Nerd Font Mono", Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
+        fontFamily: '"SpaceMono Nerd Font", "JetBrainsMono Nerd Font Mono","Hasklug Nerd Font Mono", "SauceCodePro Nerd Font Mono", Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
         // default font weight: 'normal' or 'bold'
         fontWeight: 'normal',
         // font weight for bold characters: 'normal' or 'bold'
