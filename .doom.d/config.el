@@ -32,7 +32,6 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-rose-pine)
 ;; (setq catppuccin-flavor 'mocha) ;; or 'latte, 'macchiato, or 'mocha
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -75,6 +74,14 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+(setq auto-dark-allow-osascript t)
+
+(use-package! auto-dark
+  :hook (doom-init-ui)
+  :config 
+  (setq! auto-dark-themes '((doom-rose-pine) (doom-rose-pine-dawn)))
+  (auto-dark-mode))
 
 ;; accept completion from copilot and fallback to company
 (use-package! copilot

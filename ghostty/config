@@ -1,7 +1,8 @@
 cursor-style = block
 cursor-style-blink = false
 shell-integration-features = no-cursor
-theme = rose-pine
+theme = light:rose-pine-dawn,dark:rose-pine
 font-size = 16
 font-family = "SpaceMono Nerd Font"
 font-thicken = true
+window-padding-x = 16
