@@ -96,3 +96,17 @@
   '("npx" "prettier" "--parser=astro"
     (apheleia-formatters-indent "--use-tabs" "--tab-width" 'astro-ts-mode-indent-offset))
   :modes '(astro-ts-mode))
+
+(after! lsp-mode
+  (setq lsp-disabled-clients '(typeprof-ls)))
+
+(let ((gem-bin (shell-command-to-string "gem environment gemdir | tr -d '\n'")))
+  (setq exec-path (append exec-path (list (concat gem-bin "/bin"))))
+  (setenv "PATH" (concat (getenv "PATH") ":" (concat gem-bin "/bin"))))
+
+(after! apheleia
+  (setq apheleia-formatters
+        (append apheleia-formatters
+                '((prettier-ruby . ("npx" "prettier" "--stdin-filepath" filepath
+                                    "--plugin=@prettier/plugin-ruby"
+                                    "--parser=ruby"))))))

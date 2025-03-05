@@ -102,14 +102,17 @@ export EDITR='nvim'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias ror="bin/rails"
 alias zshrc="nvim ~/.zshrc"
 alias vim="nvim"
 alias exr="exercism"
+alias uiup="pnpm up -L @1edtech/ui"
 alias usetest="gcloud container clusters get-credentials qa --zone us-central1-a --project ankur-playground"
 alias usedev="gcloud container clusters get-credentials dev --zone us-central1-a --project pnicholls-211415"
 alias usestaging="gcloud container clusters get-credentials staging --zone us-central1-a --project staging-1edtech"
 alias useprod="gcloud container clusters get-credentials prod --zone us-central1-a --project orc-project-200112"
 alias cat="bat"
+alias rmg="rails db:migrate"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -187,3 +190,5 @@ export STM32CubeMX_PATH=/Applications/STMicroelectronics/STM32CubeMX.app/Content
 eval "$(starship init zsh)"
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+export PATH="/opt/homebrew/lib/ruby/gems/3.4.0:$PATH"
+export PATH="$PATH:$(gem environment gemdir)/bin"
