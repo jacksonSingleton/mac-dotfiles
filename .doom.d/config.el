@@ -77,6 +77,9 @@
 
 (setq auto-dark-allow-osascript t)
 
+(require 'elcord)
+(elcord-mode)
+
 (use-package! auto-dark
   :hook (doom-init-ui)
   :config 

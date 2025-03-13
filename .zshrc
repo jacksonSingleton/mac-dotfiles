@@ -160,6 +160,12 @@ req(){
     curl -X GET $1 | jq
 }
 
+dockerkill(){
+    docker stop $(docker ps -aq) || true
+    docker rm $(docker ps -aq) || true
+    docker volume rm $(docker volume ls -q) || true
+}
+
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-15.jdk/Contents/Home
 
 export PATH="$JAVA_HOME/bin:$HOME/.luarocks/bin:$HOME/.emacs.d/bin:$PATH"
