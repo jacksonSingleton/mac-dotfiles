@@ -107,17 +107,41 @@ alias zshrc="nvim ~/.zshrc"
 alias vim="nvim"
 alias exr="exercism"
 alias uiup="pnpm up -L @1edtech/ui"
-alias usetest="gcloud container clusters get-credentials qa --zone us-central1-a --project ankur-playground"
 alias usedev="gcloud container clusters get-credentials dev --zone us-central1-a --project pnicholls-211415"
+alias usetest="gcloud container clusters get-credentials qa --zone us-central1-a --project ankur-playground"
 alias usestaging="gcloud container clusters get-credentials staging --zone us-central1-a --project staging-1edtech"
 alias useprod="gcloud container clusters get-credentials prod --zone us-central1-a --project orc-project-200112"
 alias cat="bat"
 alias rmg="rails db:migrate"
+alias dbpass="cryptcat $HOME/code/1edtech/db_passwords.txt.gpg"
+alias cardcount="$HOME/scripts/push_counts.sh"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+
+# nvmrc loader
+autoload -U add-zsh-hook
+load-nvmrc() {
+  local node_version="$(nvm version)"
+  local nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$node_version" ]; then
+      nvm use
+    fi
+  elif [ "$node_version" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
 
 eradik8(){
     kubectl get pods | grep -E "^"$1"-\w+-\w+ " | cut -d " " -f 1 | xargs kubectl delete pod
@@ -166,6 +190,10 @@ dockerkill(){
     docker volume rm $(docker volume ls -q) || true
 }
 
+cryptcat(){
+    gpg -d $1 | bat -l yaml
+}
+
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-15.jdk/Contents/Home
 
 export PATH="$JAVA_HOME/bin:$HOME/.luarocks/bin:$HOME/.emacs.d/bin:$PATH"
@@ -198,3 +226,12 @@ export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 export PATH="/opt/homebrew/lib/ruby/gems/3.4.0:$PATH"
 export PATH="$PATH:$(gem environment gemdir)/bin"
+
+. "$HOME/.local/bin/env"
+
+GPG_TTY=`tty`
+export GPG_TTY
+
+# Added by Windsurf
+export PATH="/Users/jackson/.codeium/windsurf/bin:$PATH"
+export PATH="$HOME/bin:$PATH"

@@ -30,6 +30,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'ThePrimeagen/harpoon'
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'neovim/nvim-lspconfig'
+    Plug 'jamessan/vim-gnupg'
 
     " CMP
     Plug 'hrsh7th/cmp-nvim-lsp'
@@ -45,9 +46,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-fugitive'
     Plug 'preservim/nerdtree'
-
-    " Status Line
-    Plug 'nvim-lualine/lualine.nvim'
 
     Plug 'feline-nvim/feline.nvim'
     Plug 'kyazdani42/nvim-web-devicons'
@@ -89,12 +87,12 @@ luafile ~/.config/nvim/status.lua
 let mapleader = " "
 " NORMAL Mode Remaps " 
 nnoremap <leader>ps :lua require('telescope.builtin').grep_string({search = vim.fn.input("Grep For > ")}) <CR>
-nnoremap <leader>ff <cmd> :lua require('telescope.builtin').find_files{path_display = {'smart'}}<cr>
+nnoremap <leader>pf <cmd> :lua require('telescope.builtin').find_files{path_display = {'smart'}}<cr>
 nnoremap <leader>fs <cmd>Telescope grep_string<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>/ <cmd>Telescope live_grep<cr>
+nnoremap <leader>bb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-nnoremap <leader>no <cmd>NERDTreeToggle<cr>
+nnoremap <leader>op <cmd>NERDTreeToggle<cr>
 nnoremap <leader>nf <cmd>NERDTreeFind<cr>
 nnoremap <leader>bb <cmd>bn<cr>
 nnoremap <leader>bw <cmd>bw<cr>
@@ -106,6 +104,8 @@ nnoremap <leader>hs <cmd>Telescope harpoon marks<cr>
 nnoremap <leader>pv <cmd>"+p<cr>
 nnoremap <leader>yv <cmd>"+y<cr>
 nnoremap <leader>vb <cmd><C-v><CR>
+nnoremap <leader>wq <C-w>q<CR>
+nnoremap <leader>vs <cmd>vs<CR>
 nnoremap <leader>wh <C-w>h<CR>
 nnoremap <leader>wl <C-w>l<CR>
 nnoremap <leader>wj <C-w>j<CR>

@@ -86,6 +86,7 @@
   (setq! auto-dark-themes '((doom-rose-pine) (doom-rose-pine-dawn)))
   (auto-dark-mode))
 
+
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
   :hook (prog-mode . copilot-mode)

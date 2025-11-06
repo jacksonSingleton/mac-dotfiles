@@ -30,7 +30,7 @@ $character"""
 
 [character]
 # format = "[►](bright-yellow) "
-format = "[❯](bright-yellow) "
+format = "[Δ](bright-yellow) "
 
 [custom.flutter_version]
 description = "Flutter version"
