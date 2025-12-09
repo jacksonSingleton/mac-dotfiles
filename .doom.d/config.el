@@ -77,15 +77,11 @@
 
 (setq auto-dark-allow-osascript t)
 
-(require 'elcord)
-(elcord-mode)
-
 (use-package! auto-dark
   :hook (doom-init-ui)
   :config 
   (setq! auto-dark-themes '((doom-rose-pine) (doom-rose-pine-dawn)))
   (auto-dark-mode))
-
 
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
@@ -95,11 +91,6 @@
               ("TAB" . 'copilot-accept-completion)
               ("C-TAB" . 'copilot-accept-completion-by-word)
               ("C-<tab>" . 'copilot-accept-completion-by-word)))
-
-(set-formatter! 'prettier-astro
-  '("npx" "prettier" "--parser=astro"
-    (apheleia-formatters-indent "--use-tabs" "--tab-width" 'astro-ts-mode-indent-offset))
-  :modes '(astro-ts-mode))
 
 (after! lsp-mode
   (setq lsp-disabled-clients '(typeprof-ls)))
@@ -114,3 +105,31 @@
                 '((prettier-ruby . ("npx" "prettier" "--stdin-filepath" filepath
                                     "--plugin=@prettier/plugin-ruby"
                                     "--parser=ruby"))))))
+
+(use-package! astro-ts-mode
+  :after treesit-auto
+  :init
+  (when (modulep! +lsp)
+    (add-hook 'astro-ts-mode-hook #'lsp! 'append))
+  :config
+  (let ((astro-recipe (make-treesit-auto-recipe
+                       :lang 'astro
+                       :ts-mode 'astro-ts-mode
+                       :url "https://github.com/virchau13/tree-sitter-astro"
+                       :revision "master"
+                       :source-dir "src")))
+    (add-to-list 'treesit-auto-recipe-list astro-recipe)))
+
+(set-formatter! 'prettier-astro
+  '("npx" "prettier" "--parser=astro"
+    (apheleia-formatters-indent "--use-tabs" "--tab-width" 'astro-ts-mode-indent-offset))
+  :modes '(astro-ts-mode))
+
+(use-package! lsp-tailwindcss
+  :after lsp-mode
+  :when (modulep! +lsp)
+  :init
+  (setq! lsp-tailwindcss-add-on-mode t)
+  :config
+
+  (add-to-list 'lsp-tailwindcss-major-modes 'astro-ts-mode))

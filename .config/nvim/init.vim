@@ -65,6 +65,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'pangloss/vim-javascript'
     Plug 'f-person/git-blame.nvim'
     Plug 'HerringtonDarkholme/yats.vim'
+    Plug 'onsails/lspkind.nvim'
 
     " Themes
     Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
@@ -72,7 +73,7 @@ call plug#end()
 
 " Language Servers Start " 
 lua << EOF
-require'lspconfig'.tsserver.setup{}
+vim.lsp.enable('ts_ls')
 EOF
 
 " Harpoon into telescope "
@@ -96,7 +97,7 @@ nnoremap <leader>op <cmd>NERDTreeToggle<cr>
 nnoremap <leader>nf <cmd>NERDTreeFind<cr>
 nnoremap <leader>bb <cmd>bn<cr>
 nnoremap <leader>bw <cmd>bw<cr>
-nnoremap <leader>pd <cmd>Prettier<cr>
+nnoremap <leader>mf <cmd>Prettier<cr>
 nnoremap <leader>ds <cmd>lua vim.diagnostic.open_float(0, { scope = "line", border = "single" })<CR>
 nnoremap <leader>zm <cmd>ZenMode<cr>
 nnoremap <leader>hm <cmd>lua require('harpoon.mark').add_file()<cr>
@@ -139,7 +140,6 @@ tnoremap <Esc> <C-\><C-n>
 
 "Nvim LSP Configuration and Keybindings" 
 lua << EOF
-local nvim_lsp = require('lspconfig')
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -176,14 +176,15 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'tsserver', 'cssls', 'solargraph', 'ccls', 'elixirls' }
+local servers = { 'ts_ls', 'cssls', 'solargraph', 'ccls', 'elixirls' }
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
+  vim.lsp.config(lsp, {
     on_attach = on_attach,
     flags = {
       debounce_text_changes = 150,
     }
-  }
+  })
+  vim.lsp.enable(lsp)
 end
 EOF
 
@@ -193,8 +194,30 @@ set completeopt=menu,menuone,noselect
 lua <<EOF
   -- Setup nvim-cmp.
   local cmp = require'cmp'
+  local lspkind = require('lspkind')
 
   cmp.setup({
+      formatting = {
+        format = lspkind.cmp_format({
+          mode = 'symbol', -- show only symbol annotations
+          maxwidth = {
+            -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+            -- can also be a function to dynamically calculate max width such as
+            -- menu = function() return math.floor(0.45 * vim.o.columns) end,
+            menu = 50, -- leading text (labelDetails)
+            abbr = 50, -- actual suggestion item
+          },
+          ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+          show_labelDetails = true, -- show labelDetails in menu. Disabled by default
+
+          -- The function below will be called before any actual modifications from lspkind
+          -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+          before = function (entry, vim_item)
+            -- ...
+            return vim_item
+          end
+        })
+      },
     snippet = {
       -- REQUIRED - you must specify a snippet engine
       expand = function(args)
@@ -254,11 +277,12 @@ lua <<EOF
   })
 
     local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-    local servers = { 'tsserver', 'cssls' }
+    local servers = { 'ts_ls', 'cssls' }
     for _, lsp in ipairs(servers) do
-      require('lspconfig')[lsp].setup {
+      vim.lsp.config(lsp, {
         capabilities = capabilities
-      }
+      })
+      vim.lsp.enable(lsp)
     end
 EOF
 

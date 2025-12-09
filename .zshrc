@@ -102,6 +102,7 @@ export EDITR='nvim'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias zj="zellij -l welcome"
 alias ror="bin/rails"
 alias zshrc="nvim ~/.zshrc"
 alias vim="nvim"
@@ -207,6 +208,20 @@ if [ -f '/Users/jackson/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then .
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export JAVA_HOME=$(/usr/libexec/java_home)
 
+
+# Zellij auto attach
+if [[ -z "$ZELLIJ" ]] && [[ -z "$SSH_CONNECTION"  ]]  ; then
+  if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
+      zellij attach -c
+  else
+      zellij -l welcome
+  fi
+
+  if [[ "$ZELLIJ_AUTO_EXIT" == "TRUE" ]]; then
+      exit
+  fi
+fi
+
 # pnpm
 export PNPM_HOME="/Users/jackson/Library/pnpm"
 case ":$PATH:" in
@@ -217,6 +232,8 @@ esac
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+
+
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
@@ -235,3 +252,4 @@ export GPG_TTY
 # Added by Windsurf
 export PATH="/Users/jackson/.codeium/windsurf/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
+eval "$(jenv init -)"
