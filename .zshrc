@@ -101,10 +101,14 @@ export EDITR='nvim'
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+#
+#
+### --- Custom Aliases ---
 
 alias zj="zellij -l welcome"
 alias ror="bin/rails"
 alias zshrc="nvim ~/.zshrc"
+alias vimrc="nvim ~/.config/nvim/init.vim"
 alias vim="nvim"
 alias exr="exercism"
 alias uiup="pnpm up -L @1edtech/ui"
@@ -144,6 +148,17 @@ load-nvmrc() {
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
 
+
+### --- Custom Functions ---
+#
+
+tt() { # time travel
+    history | grep "$1"
+}
+grune() {
+    git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
+}
+
 eradik8(){
     kubectl get pods | grep -E "^"$1"-\w+-\w+ " | cut -d " " -f 1 | xargs kubectl delete pod
 }
@@ -170,11 +185,7 @@ gush(){
 }
 
 glone(){
-    git clone "$1"
-}
-
-tt(){
-    history | grep $1
+    git clone "$1" && cd "$(basename "$1" .git)"
 }
 
 pullall(){

@@ -50,6 +50,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'feline-nvim/feline.nvim'
     Plug 'kyazdani42/nvim-web-devicons'
 
+    " markdown
+    Plug 'https://github.com/MeanderingProgrammer/render-markdown.nvim'
+
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'prettier/vim-prettier', { 'do': 'npm install' }
     Plug 'rhysd/vim-clang-format'
@@ -74,6 +77,7 @@ call plug#end()
 " Language Servers Start " 
 lua << EOF
 vim.lsp.enable('ts_ls')
+vim.lsp.enable('astro')
 EOF
 
 " Harpoon into telescope "
@@ -95,8 +99,6 @@ nnoremap <leader>bb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>op <cmd>NERDTreeToggle<cr>
 nnoremap <leader>nf <cmd>NERDTreeFind<cr>
-nnoremap <leader>bb <cmd>bn<cr>
-nnoremap <leader>bw <cmd>bw<cr>
 nnoremap <leader>mf <cmd>Prettier<cr>
 nnoremap <leader>ds <cmd>lua vim.diagnostic.open_float(0, { scope = "line", border = "single" })<CR>
 nnoremap <leader>zm <cmd>ZenMode<cr>
@@ -277,7 +279,7 @@ lua <<EOF
   })
 
     local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-    local servers = { 'ts_ls', 'cssls' }
+    local servers = { 'ts_ls', 'cssls', 'astro' }
     for _, lsp in ipairs(servers) do
       vim.lsp.config(lsp, {
         capabilities = capabilities
