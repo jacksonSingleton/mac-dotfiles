@@ -106,10 +106,12 @@ export EDITR='nvim'
 ### --- Custom Aliases ---
 
 alias zj="zellij -l welcome"
+alias gg="lazygit"
 alias ror="bin/rails"
 alias zshrc="nvim ~/.zshrc"
 alias vimrc="nvim ~/.config/nvim/init.vim"
 alias vim="nvim"
+alias v="nvim"
 alias exr="exercism"
 alias uiup="pnpm up -L @1edtech/ui"
 alias usedev="gcloud container clusters get-credentials dev --zone us-central1-a --project pnicholls-211415"
